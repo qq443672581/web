@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 </title>
+<script src="./vue.min.js"></script>
+<link rel="stylesheet" href="./iview.css"  media="all">
+<link rel="stylesheet" href="./main.css"  media="all">
+
+<script src="./iview.min.js" charset="utf-8"></script>
+<script src="./vue-router.js" charset="utf-8"></script>
+<script src="./vue-resource.min.js" charset="utf-8"></script>
+<script src="./jquery-3.3.1.min.js"></script>
+<!-- <script src="./axios.min.js" charset="utf-8"></script> -->
+
+</head>
+<body >
+<div id="app">
+	<div class="layout">
+        <layout>
+            <header >
+                <i-menu mode="horizontal" theme="light" 
+				:active-name="common.menu.horizontal_active" @on-select="horizontal_select">
+					<div :class="rotateLogo" >
+						<img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" style="width:40px;height:40px;"/>
+						<span class="log-name">后台管理系统<i> v1.0</i></span>
+					</div>
+					<div class="layout-nav">
+						<icon @click.native="collapsedSider" :class="rotateIcon" type="md-menu" size="24"></icon>
+                        <menu-item :name="one.id+''" v-for="one in common.menu.datas" >
+                            <Icon :type="one.icon" v-if="one.icon"></Icon>
+							{{one.title}}
+                        </menu-item>
+                     </div>            
+					<div class="layout-admin">
+						<Dropdown placement="bottom-end" @on-click="alert(1)">
+							<img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" style="width:30px;height:30px;"/>
+							<Icon type="md-arrow-dropdown" size="20" color="#000" style="margin-top: -20px;margin-left: -8px;"></Icon>
+							<Dropdown-Menu slot="list" >
+								<Dropdown-Item name="info">个人信息</Dropdown-Item>
+								<Dropdown-Item divided name="clean">清除缓存</Dropdown-Item>
+								<Dropdown-Item divided name="logout">退出</Dropdown-Item>
+							</Dropdown-Menu>
+						</Dropdown>
+					</div>
+                </i-menu>
+            </header>
+            
+        </layout>
+		<layout class="layout layout-buttom">
+			<Sider ref="side_l" hide-trigger :style="{background: '#363e4f',width:'40px'}" 
+				:class="menuitemClasses" width="200" collapsible :collapsed-width="50" v-model="common.menu.isCollapsed">
+			
+					<i-menu v-if="one.children && one.children.length > 0 && common.menu.horizontal_active == one.id && !common.menu.isCollapsed" 
+							accordion="true" 
+							:active-name="common.menu.active" 
+							theme="dark" width="auto" 
+							:open-names="common.menu.opens"
+							@on-select="menu_select"
+							 v-for="one in common.menu.datas" >
+							
+						<template v-for="m in one.children">
+							<Submenu :name="one.id+'-'+m.id" v-if="m.children && m.children.length > 0 && !common.menu.isCollapsed" >
+								<template slot="title">
+									<Icon :type="m.icon?m.icon:'md-apps'" ></Icon>
+									<span>{{m.title}}{{one.id+'-'+m.id}}</span>
+								</template>
+								<menu-item :name="one.id+'-'+m.id + '-' + ms.id" v-for="ms in m.children" :to="ms.path">
+									<Icon :type="ms.icon?ms.icon:'md-apps'" ></Icon>
+									<span>{{ms.title}}{{one.id+'-'+m.id + '-' + ms.id}}</span>
+								</menu-item>
+							</Submenu>
+							
+							<menu-item v-else :name="one.id+'-'+m.id" :to="m.path">
+								<Icon :type="m.icon?m.icon:'md-apps'" ></Icon>
+								<span>{{m.title}}</span>
+							</menu-item>
+						</template>
+											
+					</i-menu>
+					
+					<!-- 隐藏的时候 -->
+					<i-menu v-if="one.children && one.children.length > 0 
+						&& common.menu.horizontal_active == one.id && common.menu.isCollapsed" 
+							accordion="true" :active-name="common.menu.active" 
+							theme="dark" width="auto" :open-names="common.menu.opens"
+							 v-for="one in common.menu.datas" style="margin-top:20px;background:none">
+							
+						<template v-for="m in one.children">
+							<Dropdown style="margin:10px;margin-left: 5px;width:45px;" placement="right-start" transfer="true" 
+							v-if="m.children && m.children.length > 0" 
+							@on-click="dropdown_menu_goto" >
+								<a href="javascript:void(0)">
+									<Icon :type="m.icon?m.icon:'md-apps'" size="25" color="#FFF"></Icon>
+								</a>
+								<Dropdown-Menu slot="list">
+									<Dropdown-Item disabled>
+										<Icon :type="m.icon?m.icon:'md-apps'" ></Icon>
+										<span>{{m.title}}{{one.id+'-'+m.id}}</span>
+									</Dropdown-Item>
+									<Dropdown-Item v-for="ms in m.children" :name="ms.path+'@#$'+one.id+'-'+m.id + '-' + ms.id" divided 
+									:selected="common.menu.active==(one.id+'-'+m.id + '-' + ms.id)">
+										<Icon :type="ms.icon?ms.icon:'md-apps'" ></Icon>
+										<span>{{ms.title}}{{one.id+'-'+m.id + '-' + ms.id}}</span>
+									</Dropdown-Item>
+								</Dropdown-Menu>
+							</Dropdown>
+							
+							<menu-item v-else :name="one.id+'-'+m.id" :to="m.path" style="padding:0;margin:10px 5px;">
+								<tooltip :content="m.title+''+one.id+'-'+m.id" placement="right" :disabled="!common.menu.isCollapsed">
+									<Icon :type="m.icon?m.icon:'md-apps'" size="25" color="#FFF"></Icon>
+								</tooltip>
+								<span>{{m.title}}</span>
+							</menu-item>
+						</template>
+											
+					</i-menu>
+
+			
+			</Sider>
+			
+			<layout>
+				<nav-tag></nav-tag>
+				<layout :style="{padding: '24px',height: '100%'}">
+					<content :style="{padding: '24px', height: '100%', background: '#fff'}">
+						
+						
+						<keep-alive v-for="(item, key, index) in common.view.s" >
+						  <router-view 
+							:name="key" v-show="key == common.view.show"
+							></router-view>
+						</keep-alive>	
+							
+							
+
+					</content>
+				</layout>
+			</layout>
+		</layout>
+    </div>
+
+
+</div>
+<script src="./components.js"></script>
+<script src="./main.js"></script>
+<script>
+
+</script>
+</body>
+</html>

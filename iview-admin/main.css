@@ -1,0 +1,118 @@
+*{
+	margin:0;
+	padding:0;
+}
+html {
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+body {
+  display: table-cell;
+    width: 100%;
+  height: 100%;
+}
+#app{
+  width: 100%;
+	height:100%;
+
+}
+header ul.ivu-menu {
+	height:40px
+}
+header ul.ivu-menu .ivu-menu-item {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+.layout{
+    height:100%;
+    background: #f5f7f9;
+    position: relative;
+}
+.layout-logo{
+    width: 200px;
+    height: 40px;
+    float: left;
+	overflow:hidden;
+}
+.layout-logo img{
+	float:left;
+	width:50px;
+	height:40px;
+}
+.log-name{
+	float:left;
+	display:block;
+	width:145px;
+	margin-left:5px;
+	height:40px;
+	line-height:40px;
+    font-size: 18px;
+}
+.log-name i{
+	font-size: 12px;
+}
+.layout-admin{
+    width: 55px;
+    height: 40px;
+	color:#FFF;
+    float: right;
+}
+.layout-admin .ivu-dropdown-rel{
+	height:40px;
+}
+.layout-logo-collapsed{
+	width: 50px;
+}
+.layout-nav{
+	
+    margin-left: 20px;
+}
+.layout-icon{
+	float:left;
+	margin:8px;
+
+}
+.menu-icon{
+	transition: all .3s;
+}
+.rotate-icon{
+	transform: rotate(-90deg);
+}
+.menu-item span{
+	display: inline-block;
+	/* overflow: hidden; */
+	width: 69px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	vertical-align: bottom;
+	transition: width .2s ease .2s;
+}
+.menu-item i{
+	transform: translateX(0px);
+	transition: font-size .2s ease, transform .2s ease;
+	vertical-align: middle;
+	font-size: 16px;
+}
+
+.collapsed-menu span{
+	overflow: hidden;
+	width: 0px;
+	transition: width .2s ease;
+}
+.collapsed-menu i{
+	transform: translateX(5px);
+	transition: font-size .2s ease .2s, transform .2s ease .2s;
+	vertical-align: middle;
+	font-size: 22px;
+}
+.ivu-menu-vertical.ivu-menu-light:after{
+	background:none
+}
+	
+
+
+.layout-buttom{
+	height:calc(100% - 40px);
+}

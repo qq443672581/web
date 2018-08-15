@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+<script src="./vue.min.js"></script>
+<link rel="stylesheet" href="./iview.css"  media="all">
+<script src="./iview.min.js" charset="utf-8"></script>
+
+
+</head>
+<body>
+<div id="app">
+	<i-button type="info" icon="ios-search" shape="circle" size="small"  >按钮</i-button>
+	<button-group>
+        <i-button icon="logo-facebook" disabled loading></i-button>
+        <i-button icon="logo-twitter" ></i-button>
+    </button-group>
+	
+	<br>
+	<Icon type="ios-sad-outline" size="100" color="pink"></Icon>
+	
+	<br>
+
+	
+</div>
+
+<script>
+
+new Vue({
+  el: '#app',
+  data: {
+	a:'',
+	b:false,
+	c:2
+  },
+  methods:{
+	sub:function(){
+		this.$Message.success('Success!');
+	}
+  }
+})
+
+</script>
+</body>
+</html>
